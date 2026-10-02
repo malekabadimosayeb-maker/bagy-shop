@@ -1,0 +1,6 @@
+{
+  "name": "Bagy Shop - فروشگاه پوشاک و اکسسوری",
+  "description": "فروشگاه آنلاین لوکس و مینیمال پوشاک و اکسسوری بگی شاپ با تجربه کاربری روان، طراحی راست‌چین و مدرن",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

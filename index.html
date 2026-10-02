@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>بگی شاپ (Bagy Shop) | فروشگاه آنلاین لوکس پوشاک و اکسسوری</title>
+  <meta name="description" content="فروشگاه آنلاین لوکس و مدرن کیف، کلاه و اکسسوری بگی شاپ با طراحی مینیمال و تجربه کاربری روان" />
+  <meta property="og:title" content="Bagy Shop - فروشگاه آنلاین پوشاک و اکسسوری" />
+  <meta property="og:description" content="استایل خود را با اکسسوری‌های خاص و لوکس بگی شاپ تکمیل کنید." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Google Fonts: Vazirmatn -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Supabase JS Client v2 -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Vazirmatn', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              DEFAULT: '#0f766e',
+              dark: '#115e59',
+              light: '#14b8a6',
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              700: '#0f766e',
+              800: '#115e59',
+              900: '#134e4a',
+            },
+            accent: {
+              DEFAULT: '#d4af37',
+              dark: '#b89628',
+              light: '#f59e0b',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    * {
+      font-family: 'Vazirmatn', sans-serif;
+    }
+    /* Hide scrollbar for clean UI */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .badge-shimmer {
+      background: linear-gradient(110deg, #d4af37 8%, #fef3c7 18%, #d4af37 33%);
+      background-size: 200% 100%;
+      animation: 2.5s shimmer linear infinite;
+    }
+    @keyframes shimmer {
+      to { background-position-x: -200%; }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-teal-700 selection:text-white">
+
+  <!-- Header / Navbar -->
+  <header id="main-header" class="sticky top-0 z-50 transition-all duration-300 backdrop-blur-md bg-white/90 border-b border-slate-200/80 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Right: Brand Logo -->
+        <a href="#" class="flex items-center gap-3 group focus:outline-hidden">
+          <div class="w-12 h-12 rounded-full overflow-hidden bg-slate-900 border-2 border-amber-400 shadow-md flex items-center justify-center shrink-0 transition-transform group-hover:scale-105">
+            <!-- Bagy Shop Logo Badge matching uploaded brand identity -->
+            <svg class="w-10 h-10" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="48" fill="#0f172a" stroke="#d4af37" stroke-width="2"/>
+              <!-- Shopping Bag -->
+              <path d="M30 40 L70 40 L76 78 L24 78 Z" fill="#f59e0b" stroke="#0f172a" stroke-width="2" rx="4"/>
+              <!-- Bag handles -->
+              <path d="M40 40 V28 C40 22.5 60 22.5 60 28 V40" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
+              <!-- Eyes & Winking -->
+              <circle cx="62" cy="52" r="3.5" fill="#0f172a"/>
+              <path d="M38 52 Q43 47 48 52" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
+              <path d="M45 64 Q50 68 55 64" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
+              <!-- Cheeks -->
+              <circle cx="36" cy="58" r="3" fill="#f87171" opacity="0.8"/>
+              <circle cx="64" cy="58" r="3" fill="#f87171" opacity="0.8"/>
+              <!-- Ribbon Badge -->
+              <rect x="18" y="70" width="64" height="20" rx="10" fill="#0f766e" stroke="#d4af37" stroke-width="1.5"/>
+              <text x="50" y="84" font-size="11" font-weight="900" fill="#ffffff" text-anchor="middle" font-family="'Vazirmatn', sans-serif" direction="ltr" unicode-bidi="bidi-override">Bagy Shop</text>
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <div dir="ltr" class="inline-flex items-center text-2xl font-black tracking-tight leading-none">
+              <span class="text-teal-700">Bagy</span>
+              <span class="text-amber-500 ml-1.5">Shop</span>
+            </div>
+            <span class="text-[11px] font-medium text-slate-500 tracking-wider">بـگی شـاپ • لوکس و مدرن</span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center gap-7 text-[15px] font-medium text-slate-600">
+          <a href="#" class="text-teal-700 font-bold transition hover:text-teal-800">صفحه اصلی</a>
+          <button onclick="filterCategory('کیف زنانه')" class="hover:text-teal-700 transition cursor-pointer">کیف زنانه</button>
+          <button onclick="filterCategory('کیف کمری مردانه')" class="hover:text-teal-700 transition cursor-pointer">کیف کمری مردانه</button>
+          <button onclick="filterCategory('کلاه')" class="hover:text-teal-700 transition cursor-pointer">کلاه</button>
+          <a href="#about-sec" class="hover:text-teal-700 transition">درباره ما</a>
+          <a href="#contact-sec" class="hover:text-teal-700 transition">تماس با ما</a>
+        </nav>
+
+        <!-- Left: Action Icons -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <!-- Search Button -->
+          <button onclick="openSearch()" aria-label="جستجو" class="p-2.5 rounded-full text-slate-700 hover:text-teal-700 hover:bg-teal-50 transition cursor-pointer">
+            <i data-lucide="search" class="w-5 h-5"></i>
+          </button>
+
+          <!-- Wishlist Button -->
+          <button onclick="openWishlist()" aria-label="علاقه‌مندی‌ها" class="relative p-2.5 rounded-full text-slate-700 hover:text-red-500 hover:bg-red-50 transition cursor-pointer">
+            <i data-lucide="heart" class="w-5 h-5"></i>
+            <span id="wishlist-badge" class="hidden absolute top-1 left-1 bg-red-500 text-white text-[11px] font-bold w-5 h-5 rounded-full items-center justify-center border-2 border-white shadow-xs">0</span>
+          </button>
+
+          <!-- Cart Button -->
+          <button onclick="openCart()" aria-label="سبد خرید" class="relative p-2.5 rounded-full text-slate-700 hover:text-teal-700 hover:bg-teal-50 transition cursor-pointer">
+            <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+            <span id="cart-badge" class="hidden absolute top-1 left-1 bg-teal-700 text-white text-[11px] font-bold w-5 h-5 rounded-full items-center justify-center border-2 border-white shadow-xs">0</span>
+          </button>
+
+          <!-- Mobile Hamburger Toggle -->
+          <button onclick="toggleMobileNav()" aria-label="منوی موبایل" class="md:hidden p-2.5 rounded-xl text-slate-700 hover:bg-slate-100 transition cursor-pointer">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div id="mobile-menu-overlay" onclick="toggleMobileNav()" class="fixed inset-0 bg-black/60 z-50 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+  <aside id="mobile-menu" class="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-white z-50 shadow-2xl translate-x-full transition-transform duration-300 flex flex-col justify-between">
+    <div class="p-6">
+      <div class="flex items-center justify-between pb-6 border-b border-slate-100">
+        <div dir="ltr" class="inline-flex items-center gap-1.5">
+          <span class="text-2xl font-black text-teal-700">Bagy</span>
+          <span class="text-2xl font-black text-amber-500">Shop</span>
+        </div>
+        <button onclick="toggleMobileNav()" class="p-2 text-slate-400 hover:text-slate-700 rounded-full hover:bg-slate-100">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+      </div>
+
+      <nav class="flex flex-col gap-4 mt-6 text-base font-medium">
+        <a href="#" onclick="toggleMobileNav()" class="py-2 text-teal-700 font-bold flex items-center justify-between">
+          <span>صفحه اصلی</span>
+          <i data-lucide="chevron-left" class="w-4 h-4"></i>
+        </a>
+        <button onclick="filterCategory('کیف زنانه'); toggleMobileNav()" class="py-2 text-slate-700 hover:text-teal-700 text-right flex items-center justify-between cursor-pointer">
+          <span>کیف زنانه</span>
+          <i data-lucide="chevron-left" class="w-4 h-4"></i>
+        </button>
+        <button onclick="filterCategory('کیف کمری مردانه'); toggleMobileNav()" class="py-2 text-slate-700 hover:text-teal-700 text-right flex items-center justify-between cursor-pointer">
+          <span>کیف کمری مردانه</span>
+          <i data-lucide="chevron-left" class="w-4 h-4"></i>
+        </button>
+        <button onclick="filterCategory('کلاه'); toggleMobileNav()" class="py-2 text-slate-700 hover:text-teal-700 text-right flex items-center justify-between cursor-pointer">
+          <span>کلاه</span>
+          <i data-lucide="chevron-left" class="w-4 h-4"></i>
+        </button>
+        <a href="#about-sec" onclick="toggleMobileNav()" class="py-2 text-slate-700 hover:text-teal-700 flex items-center justify-between">
+          <span>درباره ما</span>
+          <i data-lucide="chevron-left" class="w-4 h-4"></i>
+        </a>
+        <a href="#contact-sec" onclick="toggleMobileNav()" class="py-2 text-slate-700 hover:text-teal-700 flex items-center justify-between">
+          <span>تماس با ما</span>
+          <i data-lucide="chevron-left" class="w-4 h-4"></i>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Mobile Contact Quick Info -->
+    <div class="p-6 bg-slate-50 border-t border-slate-100 text-sm">
+      <div class="text-xs text-slate-500 mb-2">ارتباط مستقیم با مدیریت</div>
+      <a href="tel:09200932393" class="flex items-center gap-2 text-slate-800 font-bold mb-2 hover:text-teal-700">
+        <i data-lucide="phone-call" class="w-4 h-4 text-teal-600"></i>
+        <span dir="ltr">0920 093 2393</span>
+      </a>
+      <a href="https://t.me/pynnmh_mddkri" target="_blank" class="flex items-center gap-2 text-sky-600 font-medium hover:underline">
+        <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+        </svg>
+        <span>تلگرام: @pynnmh_mddkri</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Hero Section -->
+  <section class="relative min-h-[75vh] md:min-h-[85vh] flex items-center justify-center overflow-hidden bg-slate-950">
+    <!-- Hero Image Background with luxury dark overlay -->
+    <img 
+      src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1600&q=85&auto=format&fit=crop" 
+      alt="بگی شاپ - اکسسوری و کیف لوکس"
+      class="absolute inset-0 w-full h-full object-cover object-center opacity-45 scale-105 transform motion-safe:animate-pulse transition-transform duration-1000"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-l from-black/90 via-black/60 to-black/30"></div>
+    
+    <!-- Hero Content -->
+    <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center md:text-right">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-300 text-xs sm:text-sm font-semibold mb-6 backdrop-blur-md">
+        <i data-lucide="sparkles" class="w-4 h-4"></i>
+        <span>کالکشن جدید پاییزه و لوکس بگی شاپ</span>
+      </div>
+      
+      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-tight sm:leading-tight mb-6 tracking-tight">
+        استایل خود را با <br class="hidden sm:inline" />
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-200 to-teal-200">اکسسوری‌های خاص</span> تکمیل کنید
+      </h1>
+
+      <p class="text-base sm:text-lg md:text-xl text-slate-300 max-w-2xl mb-10 leading-relaxed font-light mx-auto md:mx-0">
+        تجربه برتر کیفیت، مینیمالیسم خیره‌کننده و ظرافت دوخت در برگزیده‌ترین کیف‌های دست‌دوز، کیف‌های کمری ارگونومیک و کلاه‌های ترند روز.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start">
+        <a href="#products-section" class="w-full sm:w-auto px-8 py-4 rounded-full bg-teal-600 hover:bg-teal-700 text-white font-bold text-base shadow-xl hover:shadow-teal-700/30 transition-all transform hover:-translate-y-0.5 text-center flex items-center justify-center gap-2">
+          <span>مشاهده مجموعه‌ها</span>
+          <i data-lucide="arrow-left" class="w-5 h-5"></i>
+        </a>
+        <a href="#about-sec" class="w-full sm:w-auto px-8 py-4 rounded-full border border-white/30 text-white hover:bg-white/10 backdrop-blur-sm font-medium text-base transition text-center">
+          درباره برند بگی شاپ
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Strip -->
+  <section class="border-b border-slate-200 bg-white py-8 relative -mt-6 z-20 mx-4 md:mx-12 rounded-2xl shadow-lg">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
+        
+        <div class="flex items-center gap-4 p-3 rounded-xl hover:bg-slate-50 transition">
+          <div class="w-12 h-12 rounded-2xl bg-teal-50 text-teal-700 flex items-center justify-center shrink-0">
+            <i data-lucide="truck" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-slate-800 text-base">ارسال سریع سراسری</h4>
+            <p class="text-xs text-slate-500 mt-0.5">تحویل اکسپرس + رایگان برای خریدهای بالای ۵۰۰ تومان</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4 p-3 rounded-xl hover:bg-slate-50 transition">
+          <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+            <i data-lucide="shield-check" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-slate-800 text-base">ضمانت ۱۰۰٪ اصالت و کیفیت</h4>
+            <p class="text-xs text-slate-500 mt-0.5">متریال درجه یک و ۷ روز ضمانت بازگشت بی‌قیدوشرط</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4 p-3 rounded-xl hover:bg-slate-50 transition">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+            <i data-lucide="credit-card" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-slate-800 text-base">پرداخت امن و مطمئن</h4>
+            <p class="text-xs text-slate-500 mt-0.5">درگاه امن شاپرک با پشتیبانی لحظه‌ای سفارشات</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Grid Section -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div class="text-center max-w-2xl mx-auto mb-14">
+      <span class="text-teal-700 font-bold text-xs uppercase tracking-widest bg-teal-50 px-3.5 py-1 rounded-full border border-teal-100">دسته‌بندی‌های بگی شاپ</span>
+      <h2 class="text-3xl font-extrabold text-slate-900 mt-3 mb-4">جهان برگزیده بگی شاپ را کشف کنید</h2>
+      <p class="text-slate-500 text-sm leading-relaxed">
+        دسته‌بندی‌های فعال با تضمین اصالت آماده تحویل فوری هستند و دسته‌بندی‌های جدید به زودی عرضه خواهند شد.
+      </p>
+    </div>
+
+    <!-- 6 Category Cards (3 Active + 3 Coming Soon) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
+      
+      <!-- 1. Hat (Active) -->
+      <div onclick="filterCategory('کلاه')" class="group relative rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer h-80 bg-slate-900">
+        <img src="https://images.unsplash.com/photo-1521369909029-2afed882baee?w=800&q=80" alt="کلاه" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80" loading="lazy" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+        <div class="absolute bottom-6 right-6 left-6 flex items-end justify-between">
+          <div>
+            <span class="text-teal-300 text-xs font-semibold">مجموعه برگزیده</span>
+            <h3 class="text-2xl font-black text-white mt-1">کلاه (Hat)</h3>
+            <p class="text-slate-300 text-xs mt-1">مدل‌های فعال و آماده سفارش</p>
+          </div>
+          <span class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center group-hover:bg-teal-600 transition-colors">
+            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+          </span>
+        </div>
+      </div>
+
+      <!-- 2. Men's Waist Bag (Active) -->
+      <div onclick="filterCategory('کیف کمری مردانه')" class="group relative rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer h-80 bg-slate-900">
+        <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&q=80" alt="کیف کمری مردانه" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80" loading="lazy" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+        <div class="absolute bottom-6 right-6 left-6 flex items-end justify-between">
+          <div>
+            <span class="text-teal-300 text-xs font-semibold">ارگونومیک و ضدآب</span>
+            <h3 class="text-2xl font-black text-white mt-1">کیف کمری مردانه</h3>
+            <p class="text-slate-300 text-xs mt-1">مدل‌های فعال و آماده سفارش</p>
+          </div>
+          <span class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center group-hover:bg-teal-600 transition-colors">
+            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+          </span>
+        </div>
+      </div>
+
+      <!-- 3. Women's Bag (Active) -->
+      <div onclick="filterCategory('کیف زنانه')" class="group relative rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer h-80 bg-slate-900">
+        <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&q=80" alt="کیف زنانه" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80" loading="lazy" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+        <div class="absolute bottom-6 right-6 left-6 flex items-end justify-between">
+          <div>
+            <span class="text-teal-300 text-xs font-semibold">دست‌دوز و لوکس</span>
+            <h3 class="text-2xl font-black text-white mt-1">کیف زنانه</h3>
+            <p class="text-slate-300 text-xs mt-1">مدل‌های فعال و آماده سفارش</p>
+          </div>
+          <span class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center group-hover:bg-teal-600 transition-colors">
+            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+          </span>
+        </div>
+      </div>
+
+      <!-- 4. T-Shirts (Coming Soon - Non-selectable) -->
+      <div id="coming-soon-sec" onclick="showComingSoonToast('تیشرت')" class="relative rounded-2xl overflow-hidden shadow-sm h-80 bg-slate-950 cursor-pointer group select-none">
+        <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&q=80" alt="تیشرت" class="w-full h-full object-cover opacity-25 filter grayscale contrast-125 transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+        <div class="absolute inset-0 bg-slate-950/70 backdrop-blur-xs flex flex-col justify-between p-6">
+          <div class="flex justify-between items-start">
+            <span class="badge-shimmer text-slate-950 text-xs font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1.5">
+              <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+              <span>به زودی</span>
+            </span>
+            <span class="text-[11px] text-amber-300 bg-amber-950/80 border border-amber-500/30 px-2.5 py-0.5 rounded-full font-semibold">غیرقابل سفارش</span>
+          </div>
+          <div>
+            <h3 class="text-2xl font-black text-slate-200">تیشرت (T-Shirts)</h3>
+            <p class="text-slate-400 text-xs mt-1">کالکشن پارچه ۱۰۰٪ پنبه ارگانیک در حال آماده‌سازی</p>
+            <div class="mt-4 flex items-center justify-between text-xs text-amber-400/90 font-medium pt-3 border-t border-white/10">
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+                <span>به زودی اضافه می‌شود</span>
+              </span>
+              <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-md">فاز ۲</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Pants (Coming Soon - Non-selectable) -->
+      <div onclick="showComingSoonToast('شلوار')" class="relative rounded-2xl overflow-hidden shadow-sm h-80 bg-slate-950 cursor-pointer group select-none">
+        <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&q=80" alt="شلوار" class="w-full h-full object-cover opacity-25 filter grayscale contrast-125 transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+        <div class="absolute inset-0 bg-slate-950/70 backdrop-blur-xs flex flex-col justify-between p-6">
+          <div class="flex justify-between items-start">
+            <span class="badge-shimmer text-slate-950 text-xs font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1.5">
+              <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+              <span>به زودی</span>
+            </span>
+            <span class="text-[11px] text-amber-300 bg-amber-950/80 border border-amber-500/30 px-2.5 py-0.5 rounded-full font-semibold">غیرقابل سفارش</span>
+          </div>
+          <div>
+            <h3 class="text-2xl font-black text-slate-200">شلوار (Pants)</h3>
+            <p class="text-slate-400 text-xs mt-1">شلوارهای کژوال و کارگو پریمیوم در حال دوخت</p>
+            <div class="mt-4 flex items-center justify-between text-xs text-amber-400/90 font-medium pt-3 border-t border-white/10">
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+                <span>به زودی اضافه می‌شود</span>
+              </span>
+              <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-md">فاز ۲</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Shoes (Coming Soon - Non-selectable) -->
+      <div onclick="showComingSoonToast('کفش')" class="relative rounded-2xl overflow-hidden shadow-sm h-80 bg-slate-950 cursor-pointer group select-none">
+        <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&q=80" alt="کفش" class="w-full h-full object-cover opacity-25 filter grayscale contrast-125 transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+        <div class="absolute inset-0 bg-slate-950/70 backdrop-blur-xs flex flex-col justify-between p-6">
+          <div class="flex justify-between items-start">
+            <span class="badge-shimmer text-slate-950 text-xs font-black px-3.5 py-1 rounded-full shadow-md flex items-center gap-1.5">
+              <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+              <span>به زودی</span>
+            </span>
+            <span class="text-[11px] text-amber-300 bg-amber-950/80 border border-amber-500/30 px-2.5 py-0.5 rounded-full font-semibold">غیرقابل سفارش</span>
+          </div>
+          <div>
+            <h3 class="text-2xl font-black text-slate-200">کفش و اسنیکرز (Shoes)</h3>
+            <p class="text-slate-400 text-xs mt-1">کالکشن کفش چرم طبیعی و کتانی‌های هایپ</p>
+            <div class="mt-4 flex items-center justify-between text-xs text-amber-400/90 font-medium pt-3 border-t border-white/10">
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+                <span>به زودی اضافه می‌شود</span>
+              </span>
+              <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-md">فاز ۲</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <section id="products-section" class="bg-slate-100/70 py-20 border-t border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+        <div>
+          <span class="text-teal-700 font-bold text-xs uppercase tracking-wider bg-teal-50 px-3.5 py-1 rounded-full border border-teal-100">ویترین اختصاصی</span>
+          <h2 class="text-3xl font-black text-slate-900 mt-2">محصولات منتخب بگی شاپ</h2>
+          <p class="text-slate-500 text-sm mt-1">تضمین بالاترین کیفیت متریال و ظرافت دوخت</p>
+        </div>
+
+        <!-- Filter and Sort Controls -->
+        <div class="flex flex-wrap items-center gap-3">
+          <!-- Sort Dropdown -->
+          <div class="relative">
+            <select id="sort-select" onchange="handleSortChange(this.value)" class="bg-white border border-slate-200 text-slate-700 text-sm rounded-full py-2.5 px-4 pr-3 pl-8 appearance-none focus:outline-hidden focus:border-teal-600 shadow-2xs font-medium cursor-pointer">
+              <option value="newest">جدیدترین محصولات</option>
+              <option value="popular">محبوب‌ترین‌ها</option>
+              <option value="price-asc">ارزان‌ترین</option>
+              <option value="price-desc">گران‌ترین</option>
+            </select>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 absolute left-3 top-3 pointer-events-none"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-4 mb-8 no-scrollbar">
+        <button onclick="filterCategory('all')" id="cat-btn-all" class="cat-pill active px-5 py-2.5 rounded-full text-sm font-bold bg-teal-700 text-white shadow-sm transition whitespace-nowrap cursor-pointer">
+          همه محصولات (<span id="count-all">0</span>)
+        </button>
+        <button onclick="filterCategory('کلاه')" id="cat-btn-کلاه" class="cat-pill px-5 py-2.5 rounded-full text-sm font-medium bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 transition whitespace-nowrap cursor-pointer">
+          کلاه (<span id="count-کلاه">0</span>)
+        </button>
+        <button onclick="filterCategory('کیف کمری مردانه')" id="cat-btn-کیف کمری مردانه" class="cat-pill px-5 py-2.5 rounded-full text-sm font-medium bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 transition whitespace-nowrap cursor-pointer">
+          کیف کمری مردانه (<span id="count-کیف کمری مردانه">0</span>)
+        </button>
+        <button onclick="filterCategory('کیف زنانه')" id="cat-btn-کیف زنانه" class="cat-pill px-5 py-2.5 rounded-full text-sm font-medium bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 transition whitespace-nowrap cursor-pointer">
+          کیف زنانه (<span id="count-کیف زنانه">0</span>)
+        </button>
+      </div>
+
+      <!-- Products Grid -->
+      <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Injected via JavaScript -->
+      </div>
+
+      <!-- Empty State (if filter results in 0 items) -->
+      <div id="no-products-msg" class="hidden text-center py-16">
+        <div class="w-16 h-16 mx-auto rounded-full bg-slate-200 text-slate-500 flex items-center justify-center mb-4">
+          <i data-lucide="package-search" class="w-8 h-8"></i>
+        </div>
+        <h3 class="text-lg font-bold text-slate-800">محصولی در این دسته‌بندی یافت نشد</h3>
+        <p class="text-sm text-slate-500 mt-1">لطفاً فیلترها را تغییر دهید یا همه محصولات را مشاهده کنید.</p>
+        <button onclick="filterCategory('all')" class="mt-4 px-6 py-2.5 bg-teal-700 text-white rounded-full text-sm font-semibold hover:bg-teal-800 transition">
+          مشاهده همه محصولات
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- About Us Section -->
+  <section id="about-sec" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <span class="text-teal-700 font-bold text-xs uppercase tracking-widest bg-teal-50 px-3.5 py-1 rounded-full border border-teal-100">داستان ما</span>
+          <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-3 mb-6 leading-tight">
+            بگی شاپ؛ تلاقی مدرنیته و اصالت در دنیای اکسسوری
+          </h2>
+          <p class="text-slate-600 leading-relaxed mb-4 text-justify">
+            برند <strong class="text-teal-700 font-bold">بگی شاپ (Bagy Shop)</strong> با نگاهی دقیق به مد پایدار و طراحی مینیمال، مجموعه‌ای از باکیفیت‌ترین کیف‌های چرم زنانه، کیف‌های کمری اسپرت مردانه و کلاه‌های ترند را برای افراد خوش‌پوش گرد هم آورده است.
+          </p>
+          <p class="text-slate-600 leading-relaxed mb-8 text-justify">
+            هر اثر در بگی شاپ با وسواس در انتخاب چرم، یراق‌آلات استیل ضدزنگ و استاندارد ارگونومی ساخته شده تا همراهی همیشگی برای استایل روزمره و مجالس شما باشد.
+          </p>
+          <div class="grid grid-cols-3 gap-4 border-t border-slate-100 pt-6">
+            <div>
+              <div class="text-2xl font-black text-teal-700">۱۰۰٪</div>
+              <div class="text-xs text-slate-500 mt-1">تضمین رضایت و اصالت</div>
+            </div>
+            <div>
+              <div class="text-2xl font-black text-amber-500">+۳۵۰۰</div>
+              <div class="text-xs text-slate-500 mt-1">مشتری وفادار</div>
+            </div>
+            <div>
+              <div class="text-2xl font-black text-slate-900">۲۴/۷</div>
+              <div class="text-xs text-slate-500 mt-1">پشتیبانی متعهدانه</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div class="aspect-4/3 rounded-3xl overflow-hidden shadow-2xl">
+            <img src="https://images.unsplash.com/photo-1591561954557-26941169b49e?w=800&q=80" alt="درباره بگی شاپ" class="w-full h-full object-cover" />
+          </div>
+          <div class="absolute -bottom-6 -right-6 bg-white p-6 rounded-2xl shadow-xl border border-slate-100 max-w-xs hidden sm:block">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center font-bold">
+                <i data-lucide="award" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-slate-800 text-sm">برند برتر اکسسوری ۱۴۰۴</h4>
+                <p class="text-[11px] text-slate-500">انتخاب استایلیست‌های مد روز</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Us Section -->
+  <section id="contact-sec" class="py-20 bg-slate-900 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <span class="text-amber-400 font-bold text-xs uppercase tracking-widest bg-amber-400/10 px-3.5 py-1 rounded-full border border-amber-400/20">تماس با ما</span>
+        <h2 class="text-3xl font-extrabold text-white mt-3 mb-4">همواره در کنار شما هستیم</h2>
+        <p class="text-slate-400 text-sm leading-relaxed">
+          برای مشاوره تخصصی سایز، پیگیری سفارش‌ها یا سفارشات عمده با ما در ارتباط باشید.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Contact Card: Phone -->
+        <div class="bg-slate-800/80 p-8 rounded-2xl border border-slate-700/60 flex flex-col justify-between hover:border-teal-500 transition">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center mb-6">
+              <i data-lucide="phone-outgoing" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">تماس تلفنی مستقیم</h3>
+            <p class="text-slate-400 text-sm mb-4">پاسخگویی شنبه تا پنجشنبه ۹ الی ۲۱</p>
+          </div>
+          <div>
+            <a href="tel:09200932393" dir="ltr" class="text-2xl font-black text-amber-400 hover:text-amber-300 block tracking-wider">
+              0920 093 2393
+            </a>
+          </div>
+        </div>
+
+        <!-- Contact Card: Telegram -->
+        <div class="bg-slate-800/80 p-8 rounded-2xl border border-slate-700/60 flex flex-col justify-between hover:border-sky-500 transition">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center mb-6">
+              <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">پشتیبانی تلگرام</h3>
+            <p class="text-slate-400 text-sm mb-4">پاسخگویی سریع ۲۴ ساعته توسط کارشناسان</p>
+          </div>
+          <div>
+            <a href="https://t.me/pynnmh_mddkri" target="_blank" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-sm transition shadow-sm hover:shadow-sky-500/20">
+              <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+              </svg>
+              <span>گفتگو در تلگرام (@pynnmh_mddkri)</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Contact Card: Address -->
+        <div class="bg-slate-800/80 p-8 rounded-2xl border border-slate-700/60 flex flex-col justify-between hover:border-amber-500 transition">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-6">
+              <i data-lucide="map-pin" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">دفتر مرکزی و تحویل حضوری</h3>
+            <p class="text-slate-300 text-sm leading-relaxed mt-2">
+              تهران، پاسداران، سروستان هفتم، پلاک ۹
+            </p>
+          </div>
+          <div class="mt-4 text-xs text-slate-400">
+            امکان تحویل فوری با پیک در شهر تهران
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-slate-950 text-slate-400 border-t border-slate-800 pt-16 pb-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-slate-800/80">
+        
+        <!-- Col 1: Brand Info -->
+        <div>
+          <div dir="ltr" class="inline-flex items-center gap-1.5 mb-4">
+            <span class="text-2xl font-black text-teal-400">Bagy</span>
+            <span class="text-2xl font-black text-amber-400">Shop</span>
+          </div>
+          <p class="text-slate-400 text-sm leading-relaxed mb-6">
+            فروشگاه اینترنتی بگی شاپ، مقصدی مطمئن برای عاشقان مد مینیمال و اکسسوری‌های خاص. تعهد به کیفیت، تضمین اصالت و بسته‌بندی لوکس کادویی.
+          </p>
+          <div class="flex items-center gap-3">
+            <!-- Telegram Official Icon -->
+            <a href="https://t.me/pynnmh_mddkri" target="_blank" aria-label="تلگرام بگی شاپ" class="w-9 h-9 rounded-full bg-slate-800 text-slate-300 hover:text-white hover:bg-sky-500 flex items-center justify-center transition">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+              </svg>
+            </a>
+            <!-- Instagram Official Icon -->
+            <a href="https://instagram.com" target="_blank" aria-label="اینستاگرام بگی شاپ" class="w-9 h-9 rounded-full bg-slate-800 text-slate-300 hover:text-white hover:bg-pink-600 flex items-center justify-center transition">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+              </svg>
+            </a>
+            <!-- Phone Icon -->
+            <a href="tel:09200932393" aria-label="تماس تلفنی با بگی شاپ" class="w-9 h-9 rounded-full bg-slate-800 text-slate-300 hover:text-white hover:bg-teal-600 flex items-center justify-center transition">
+              <i data-lucide="phone" class="w-4 h-4"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Col 2: Quick Links -->
+        <div>
+          <h4 class="text-white font-bold text-base mb-4">دسترسی سریع</h4>
+          <ul class="space-y-2.5 text-sm">
+            <li><a href="#" class="hover:text-teal-400 transition">صفحه اصلی</a></li>
+            <li><a href="#products-section" class="hover:text-teal-400 transition">همه محصولات</a></li>
+            <li><button onclick="filterCategory('کیف زنانه')" class="hover:text-teal-400 transition text-right">کیف‌های زنانه لوکس</button></li>
+            <li><button onclick="filterCategory('کیف کمری مردانه')" class="hover:text-teal-400 transition text-right">کیف‌های کمری مردانه</button></li>
+            <li><button onclick="filterCategory('کلاه')" class="hover:text-teal-400 transition text-right">کلاه‌های ترند</button></li>
+            <li><a href="#about-sec" class="hover:text-teal-400 transition">درباره ما</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Contact Details -->
+        <div>
+          <h4 class="text-white font-bold text-base mb-4">اطلاعات ارتباطی</h4>
+          <ul class="space-y-3 text-sm">
+            <li class="flex items-start gap-3">
+              <i data-lucide="phone" class="w-4 h-4 text-teal-400 shrink-0 mt-1"></i>
+              <a href="tel:09200932393" dir="ltr" class="hover:text-teal-400 transition font-bold text-white">0920 093 2393</a>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-4 h-4 text-teal-400 shrink-0 mt-1 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+              </svg>
+              <a href="https://t.me/pynnmh_mddkri" target="_blank" class="hover:text-teal-400 transition">تلگرام: @pynnmh_mddkri</a>
+            </li>
+            <li class="flex items-start gap-3">
+              <i data-lucide="map-pin" class="w-4 h-4 text-teal-400 shrink-0 mt-1"></i>
+              <span>تهران، پاسداران، سروستان هفتم، پلاک ۹</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i data-lucide="clock" class="w-4 h-4 text-teal-400 shrink-0 mt-1"></i>
+              <span>ساعات کاری: ۱۰ صبح الی ۹ شب</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Newsletter & Trust badges -->
+        <div>
+          <h4 class="text-white font-bold text-base mb-4">عضویت در خبرنامه تخفیف‌ها</h4>
+          <p class="text-xs text-slate-400 mb-3">از تخفیف‌های ویژه و ورود کالکشن‌های جدید زودتر باخبر شوید.</p>
+          <form onsubmit="handleNewsletter(event)" class="flex gap-2">
+            <input type="email" required placeholder="ایمیل شما..." class="bg-slate-900 border border-slate-700 text-sm text-white px-3 py-2 rounded-xl w-full focus:outline-hidden focus:border-teal-500" />
+            <button type="submit" class="bg-teal-700 hover:bg-teal-600 text-white px-4 py-2 rounded-xl text-sm font-bold transition">عضویت</button>
+          </form>
+
+          <!-- Simulated Trust Badges -->
+          <div class="mt-6 flex items-center gap-3">
+            <div class="bg-slate-900 border border-slate-800 p-2 rounded-xl text-center flex-1">
+              <div class="text-xs font-bold text-slate-300">اینماد</div>
+              <div class="text-[10px] text-teal-400 mt-0.5">۵ ستاره رسمی</div>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 p-2 rounded-xl text-center flex-1">
+              <div class="text-xs font-bold text-slate-300">ساماندهی</div>
+              <div class="text-[10px] text-teal-400 mt-0.5">ثبت ملی</div>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 p-2 rounded-xl text-center flex-1">
+              <div class="text-xs font-bold text-slate-300">شاپرک</div>
+              <div class="text-[10px] text-teal-400 mt-0.5">درگاه امن</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        <div>
+          تمامی حقوق مادی و معنوی متعلق به برند <strong class="text-slate-300">Bagy Shop</strong> می‌باشد. طراحی با افتخار در ایران.
+        </div>
+        <div class="flex items-center gap-4">
+          <!-- Subtle Admin Panel Trigger -->
+          <a href="#admin" onclick="openAdmin()" class="text-slate-600 hover:text-slate-400 transition flex items-center gap-1">
+            <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+            <span>پنل مدیریت v1.4</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== MODALS & DRAWERS ==================== -->
+
+  <!-- 1. Search Overlay -->
+  <div id="search-overlay" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden opacity-0 transition-opacity duration-300 flex items-start justify-center pt-20 px-4">
+    <div class="bg-white rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl transition-transform duration-300 transform scale-95" id="search-box">
+      <div class="p-4 sm:p-6 border-b border-slate-100 flex items-center gap-3">
+        <i data-lucide="search" class="w-6 h-6 text-teal-700"></i>
+        <input 
+          id="search-input" 
+          type="text" 
+          placeholder="جستجو در محصولات بگی شاپ (کلاه، کیف زنانه، کیف کمری...)" 
+          class="w-full text-base sm:text-lg text-slate-800 placeholder-slate-400 focus:outline-hidden font-medium"
+          oninput="handleSearch(this.value)"
+        />
+        <button onclick="closeSearch()" class="p-2 text-slate-400 hover:text-slate-700 rounded-full hover:bg-slate-100">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div id="search-results" class="max-h-96 overflow-y-auto p-4 space-y-3">
+        <p class="text-center text-sm text-slate-400 py-6">کلمه مورد نظر خود را تایپ کنید...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Product Detail Modal -->
+  <div id="product-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl relative" id="product-modal-content">
+      <!-- Injected via JavaScript -->
+    </div>
+  </div>
+
+  <!-- 3. Cart Drawer -->
+  <div id="cart-drawer-overlay" onclick="closeCart()" class="fixed inset-0 bg-black/60 z-50 opacity-0 pointer-events-none transition-opacity duration-300 backdrop-blur-xs"></div>
+  <aside id="cart-drawer" class="fixed top-0 right-0 bottom-0 w-full sm:w-96 max-w-full bg-white z-50 shadow-2xl translate-x-full transition-transform duration-300 flex flex-col justify-between">
+    <!-- Cart Header -->
+    <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <i data-lucide="shopping-bag" class="w-5 h-5 text-teal-700"></i>
+        <h3 class="font-bold text-slate-900 text-lg">سبد خرید شما</h3>
+        <span id="cart-items-count" class="text-xs bg-teal-50 text-teal-700 px-2 py-0.5 rounded-full font-bold">۰ کالا</span>
+      </div>
+      <button onclick="closeCart()" class="p-2 text-slate-400 hover:text-slate-700 rounded-full hover:bg-slate-100">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <!-- Free Shipping Bar -->
+    <div class="bg-teal-50 px-5 py-3 border-b border-teal-100">
+      <div class="flex justify-between text-xs text-teal-900 font-semibold mb-1">
+        <span id="free-shipping-text">ارسال رایگان برای خریدهای بالای ۵۰۰,۰۰۰ تومان</span>
+        <span id="free-shipping-percent">۰٪</span>
+      </div>
+      <div class="w-full bg-teal-200/60 rounded-full h-1.5 overflow-hidden">
+        <div id="free-shipping-progress" class="bg-teal-700 h-full rounded-full transition-all duration-300" style="width: 0%"></div>
+      </div>
+    </div>
+
+    <!-- Cart Items List -->
+    <div id="cart-items-container" class="flex-1 overflow-y-auto p-5 space-y-4">
+      <!-- Items dynamically populated -->
+    </div>
+
+    <!-- Cart Footer & Checkout Button -->
+    <div class="p-5 bg-slate-50 border-t border-slate-100 space-y-3">
+      <div class="space-y-1.5 text-sm">
+        <div class="flex justify-between text-slate-500">
+          <span>جمع کل اقلام:</span>
+          <span id="cart-subtotal" class="font-bold text-slate-700">۰ تومان</span>
+        </div>
+        <div class="flex justify-between text-slate-500">
+          <span>هزینه ارسال:</span>
+          <span id="cart-shipping" class="font-bold text-teal-700">رایگان</span>
+        </div>
+        <div class="flex justify-between text-base font-black text-slate-900 pt-2 border-t border-slate-200">
+          <span>مبلغ قابل پرداخت:</span>
+          <span id="cart-total" class="text-teal-700 font-black">۰ تومان</span>
+        </div>
+      </div>
+
+      <button id="checkout-btn" onclick="openCheckout()" class="w-full py-3.5 rounded-full bg-teal-700 hover:bg-teal-800 text-white font-bold text-base shadow-md hover:shadow-lg transition flex items-center justify-center gap-2 cursor-pointer">
+        <span>تکمیل و ثبت سفارش</span>
+        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+      </button>
+    </div>
+  </aside>
+
+  <!-- 4. Wishlist Drawer -->
+  <div id="wishlist-overlay" onclick="closeWishlist()" class="fixed inset-0 bg-black/60 z-50 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+  <aside id="wishlist-drawer" class="fixed top-0 right-0 bottom-0 w-full sm:w-96 max-w-full bg-white z-50 shadow-2xl translate-x-full transition-transform duration-300 flex flex-col justify-between">
+    <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <i data-lucide="heart" class="w-5 h-5 text-red-500"></i>
+        <h3 class="font-bold text-slate-900 text-lg">لیست علاقه‌مندی‌ها</h3>
+      </div>
+      <button onclick="closeWishlist()" class="p-2 text-slate-400 hover:text-slate-700 rounded-full hover:bg-slate-100">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+    <div id="wishlist-items-container" class="flex-1 overflow-y-auto p-5 space-y-4">
+      <!-- Items dynamically populated -->
+    </div>
+  </aside>
+
+  <!-- 5. Checkout Modal -->
+  <div id="checkout-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl p-6 sm:p-8 relative">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
+        <div>
+          <h3 class="text-xl font-black text-slate-900">نهایی‌سازی و ثبت سفارش</h3>
+          <p class="text-xs text-slate-500 mt-1">اطلاعات گیرنده را با دقت وارد فرمایید</p>
+        </div>
+        <button onclick="closeCheckout()" class="p-2 text-slate-400 hover:text-slate-700 rounded-full hover:bg-slate-100">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Checkout Form -->
+      <form id="checkout-form" onsubmit="handlePlaceOrder(event)" class="space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">نام و نام خانوادگی *</label>
+            <input type="text" id="order-name" required placeholder="مثال: محمد امینی" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-hidden focus:border-teal-600" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">شماره تماس همراه (۱۱ رقم) *</label>
+            <input type="tel" id="order-phone" required pattern="09[0-9]{9}" placeholder="۰۹۱۲۳۴۵۶۷۸۹" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-hidden focus:border-teal-600" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">استان و شهر *</label>
+            <input type="text" id="order-city" required placeholder="مثال: تهران" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-hidden focus:border-teal-600" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">کد پستی ۱۰ رقمی (اختیاری)</label>
+            <input type="text" id="order-postal" placeholder="مثال: ۱۹۵۷۸۲۴۱۵۲" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-hidden focus:border-teal-600" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">آدرس پستی کامل و دقیق *</label>
+          <textarea id="order-address" required rows="2" placeholder="خیابان، کوچه، پلاک، واحد..." class="w-full px-4 py-2 rounded-xl border border-slate-200 text-sm focus:outline-hidden focus:border-teal-600"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">توضیحات و یادداشت سفارش (اختیاری)</label>
+          <input type="text" id="order-note" placeholder="مثال: هماهنگی قبل از تحویل، بسته‌بندی کادویی..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-hidden focus:border-teal-600" />
+        </div>
+
+        <!-- Invoice Preview in Form -->
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2 text-sm">
+          <div class="flex justify-between text-slate-600">
+            <span>مبلغ کالاها:</span>
+            <span id="checkout-subtotal" class="font-bold">۰ تومان</span>
+          </div>
+          <div class="flex justify-between text-slate-600">
+            <span>هزینه حمل و نقل:</span>
+            <span id="checkout-shipping" class="font-bold text-teal-700">رایگان</span>
+          </div>
+          <div class="flex justify-between text-base font-black text-slate-900 border-t border-slate-200 pt-2">
+            <span>مبلغ پرداختی نهایی:</span>
+            <span id="checkout-total" class="text-teal-700 font-black">۰ تومان</span>
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-4 rounded-full bg-teal-700 hover:bg-teal-800 text-white font-bold text-base shadow-lg transition flex items-center justify-center gap-2 cursor-pointer">
+          <i data-lucide="shield-check" class="w-5 h-5"></i>
+          <span>پرداخت آنلاین و ثبت نهایی سفارش</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 6. Order Success Modal -->
+  <div id="order-success-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl w-full max-w-md shadow-2xl p-8 text-center">
+      <div class="w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-5 shadow-inner">
+        <i data-lucide="check-circle-2" class="w-10 h-10"></i>
+      </div>
+      <h3 class="text-2xl font-black text-slate-900 mb-2">سفارش با موفقیت ثبت شد!</h3>
+      <p class="text-slate-600 text-sm mb-6 leading-relaxed">
+        از خرید شما از بگی شاپ سپاسگزاریم. سفارش شما جهت بسته‌بندی و ارسال به انبار ارسال گردید.
+      </p>
+
+      <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm mb-6 space-y-2">
+        <div class="flex justify-between">
+          <span class="text-slate-500">کد رهگیری اختصاصی:</span>
+          <span id="order-tracking-code" class="font-black text-teal-700 font-mono text-base">BGY-000000</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-500">زمان تحویل تخمینی:</span>
+          <span class="font-semibold text-slate-800">۲ الی ۳ روز کاری</span>
+        </div>
+      </div>
+
+      <button onclick="closeOrderSuccess()" class="w-full py-3 rounded-full bg-teal-700 hover:bg-teal-800 text-white font-bold text-sm transition">
+        ادامه خرید از بگی شاپ
+      </button>
+    </div>
+  </div>
+
+  <!-- 7. Admin Panel Modal -->
+  <div id="admin-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl w-full max-w-5xl max-h-[90vh] overflow-y-auto shadow-2xl flex flex-col">
+      <!-- Admin Header -->
+      <div class="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-900 text-white rounded-t-3xl">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-teal-600 flex items-center justify-center">
+            <i data-lucide="shield" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-black text-lg">پنل مدیریت اختصاصی بگی شاپ</h3>
+            <p class="text-xs text-slate-400">مدیریت محصولات، موجودی و آمار سفارشات</p>
+          </div>
+        </div>
+        <button onclick="closeAdmin()" class="p-2 text-slate-400 hover:text-white rounded-full hover:bg-slate-800">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+      </div>
+
+      <!-- Admin Navigation Tabs -->
+      <div class="flex border-b border-slate-200 bg-slate-50 px-6 gap-2 sm:gap-4 overflow-x-auto no-scrollbar">
+        <button onclick="switchAdminTab('products')" id="admin-tab-products" class="py-3 px-4 font-bold text-sm text-teal-700 border-b-2 border-teal-700 whitespace-nowrap cursor-pointer">
+          مدیریت محصولات
+        </button>
+        <button onclick="switchAdminTab('add')" id="admin-tab-add" class="py-3 px-4 font-medium text-sm text-slate-600 hover:text-slate-900 whitespace-nowrap cursor-pointer">
+          افزودن محصول جدید
+        </button>
+        <button onclick="switchAdminTab('orders')" id="admin-tab-orders" class="py-3 px-4 font-medium text-sm text-slate-600 hover:text-slate-900 whitespace-nowrap cursor-pointer">
+          سفارشات مشتریان
+        </button>
+        <button onclick="switchAdminTab('analytics')" id="admin-tab-analytics" class="py-3 px-4 font-medium text-sm text-slate-600 hover:text-slate-900 whitespace-nowrap cursor-pointer">
+          آمار و گزارشات
+        </button>
+      </div>
+
+      <!-- Admin Tab Content -->
+      <div class="p-6 flex-1">
+        
+        <!-- Tab 1: Manage Products -->
+        <div id="admin-view-products" class="space-y-4">
+          <div class="flex justify-between items-center mb-4">
+            <h4 class="font-bold text-slate-800">لیست تمامی محصولات موجود</h4>
+            <button onclick="switchAdminTab('add')" class="px-4 py-2 bg-teal-700 text-white text-xs font-bold rounded-xl hover:bg-teal-800 flex items-center gap-1.5">
+              <i data-lucide="plus" class="w-4 h-4"></i>
+              <span>افزودن محصول جدید</span>
+            </button>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-right text-sm">
+              <thead class="bg-slate-100 text-slate-600 text-xs">
+                <tr>
+                  <th class="p-3">تصویر</th>
+                  <th class="p-3">نام محصول</th>
+                  <th class="p-3">دسته‌بندی</th>
+                  <th class="p-3">قیمت (تومان)</th>
+                  <th class="p-3">وضعیت</th>
+                  <th class="p-3 text-center">عملیات</th>
+                </tr>
+              </thead>
+              <tbody id="admin-products-table-body" class="divide-y divide-slate-100">
+                <!-- Dynamically rendered -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Tab 2: Add Product Form -->
+        <div id="admin-view-add" class="hidden">
+          <form onsubmit="handleAdminAddProduct(event)" class="space-y-4 max-w-2xl mx-auto">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">نام محصول *</label>
+              <input type="text" id="admin-p-title" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-teal-600 focus:outline-hidden" />
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">دسته‌بندی *</label>
+                <select id="admin-p-cat" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-teal-600 focus:outline-hidden">
+                  <option value="کیف زنانه">کیف زنانه</option>
+                  <option value="کیف کمری مردانه">کیف کمری مردانه</option>
+                  <option value="کلاه">کلاه</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">قیمت (به تومان) *</label>
+                <input type="number" id="admin-p-price" required min="10000" step="10000" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-teal-600 focus:outline-hidden" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">لینک مستقیم تصویر اصلی (Unsplash و...) *</label>
+              <input type="url" id="admin-p-image" required placeholder="https://images.unsplash.com/..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-teal-600 focus:outline-hidden" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">توضیحات محصول</label>
+              <textarea id="admin-p-desc" rows="3" class="w-full px-4 py-2 rounded-xl border border-slate-200 text-sm focus:border-teal-600 focus:outline-hidden"></textarea>
+            </div>
+            <button type="submit" class="w-full py-3 bg-teal-700 text-white font-bold rounded-xl hover:bg-teal-800 transition">
+              ذخیره و انتشار محصول در فروشگاه
+            </button>
+          </form>
+        </div>
+
+        <!-- Tab 3: Orders List -->
+        <div id="admin-view-orders" class="hidden space-y-4">
+          <div class="flex justify-between items-center mb-2">
+            <h4 class="font-bold text-slate-800">لیست سفارشات ثبت‌شده در Supabase</h4>
+            <button onclick="loadAdminOrdersAndStats()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition flex items-center gap-1">
+              <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+              <span>بروزرسانی لیست</span>
+            </button>
+          </div>
+          <div id="admin-orders-list" class="space-y-3">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+        <!-- Tab 4: Analytics -->
+        <div id="admin-view-analytics" class="hidden space-y-6">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="bg-teal-50 p-5 rounded-2xl border border-teal-100">
+              <div class="text-xs text-teal-800 font-bold">تعداد کل محصولات</div>
+              <div id="stat-total-products" class="text-3xl font-black text-teal-900 mt-2">۰</div>
+            </div>
+            <div class="bg-amber-50 p-5 rounded-2xl border border-amber-100">
+              <div class="text-xs text-amber-800 font-bold">تعداد کل سفارشات ثبت‌شده</div>
+              <div id="stat-total-orders" class="text-3xl font-black text-amber-900 mt-2">۰</div>
+            </div>
+            <div class="bg-emerald-50 p-5 rounded-2xl border border-emerald-100">
+              <div class="text-xs text-emerald-800 font-bold">مجموع فروش ثبت‌شده</div>
+              <div id="stat-total-revenue" class="text-2xl font-black text-emerald-900 mt-2">۰ تومان</div>
+            </div>
+          </div>
+          <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-500 leading-relaxed">
+            کلیه این آمار به صورت بلادرنگ از جدول‌های <code class="text-teal-700 font-bold">products</code> و <code class="text-teal-700 font-bold">orders</code> در پایگاه داده Supabase محاسبه می‌گردد.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed bottom-6 left-6 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+  <!-- Include App Logic -->
+  <script src="./src/app.js"></script>
+</body>
+</html>
